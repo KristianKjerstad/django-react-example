@@ -6,9 +6,11 @@
 	"image": "mcr.microsoft.com/devcontainers/base:jammy",
 	"features": {
 		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
 		"ghcr.io/devcontainers/features/python:1": {},
 		"ghcr.io/devcontainers-contrib/features/npm-package:1": {},
-		"ghcr.io/akhildevelops/devcontainer-features/piphttps://blog.logrocket.com/wp-content/uploads/2022/07/img1-Final-visualization-React-app-using-React-Django.png:0": {}
+		"ghcr.io/akhildevelops/devcontainer-features/pip:0": {}
 	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},

@@ -1,0 +1,121 @@
+default_stages: [pre-commit]
+default_install_hook_types: [pre-commit]
+repos:
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-ast
+        language_version: python3.10
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-json
+        exclude: .devcontainer/devcontainer.json
+      - id: check-toml
+      - id: check-yaml
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: detect-private-key
+
+
+  - repo: https://github.com/hadialqattan/pycln
+    rev: v2.2.2
+    hooks:
+      - id: pycln
+        name: Find and remove unused import statements.
+        args: [./backend, --all]
+        pass_filenames: false
+
+  - repo: https://github.com/ambv/black
+    rev: 23.9.1
+    hooks:
+      - id: black
+        name: Code formatting
+        language_version: python3.10
+        args: [--config=backend/pyproject.toml]
+
+  - repo: https://github.com/pycqa/flake8
+    rev: '6.1.0'
+    hooks:
+      - id: flake8
+        name: Check code against the pep8 standard
+        args: [--config=backend/.flake8]
+
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: Sort imports
+        files: /.*\.py$
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.5
+    hooks:
+      - id: bandit
+        name: Security checks for python pacakges
+        args: [-l, --recursive, -x, tests]
+        files: /.*\.py$
+
+  - repo: https://github.com/econchick/interrogate
+    rev: 1.5.0
+    hooks:
+      - id: interrogate
+        name: Check python docstring coverage
+        language_version: python3.10
+        types: [python]
+        args: [--config=backend/pyproject.toml]
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.0.3
+    hooks:
+      - id: prettier
+        files: ^frontend/src/.*\.(vue|js|js|css|html|json)$
+        args:
+          ["--config=frontend/.prettierrc.js", "--ignore-path=web/.prettierignore"]
+
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v8.49.0
+    hooks:
+      - id: eslint
+        name: run eslint
+        files: ^frontend/src/.*\.(vue|js|js|css|html|json)$
+        types: [file]
+        args: ["--config=frontend/.eslintrc.js", "--ignore-path=frontend/.eslintignore"]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.5.1
+    hooks:
+      - id: mypy
+        name: Type checking
+        args: [--config-file=backend/pyproject.toml]
+        exclude: sommerprosjekt2023/
+        additional_dependencies:
+          - gql
+          - pytest
+          - aiohttp
+          - python-dotenv
+          - gql-query-builder
+          - types-requests
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.5
+    hooks:
+      - id: codespell
+        name: codespell
+        description: Checks for common misspellings in text files.
+        entry: codespell --toml=backend/pyproject.toml
+        language: python
+        types: [text]
+        additional_dependencies:
+          - tomli
+
+  # - repo: local
+  #   hooks:
+  #     - id: pytest
+  #       name: Run pytest
+  #       entry: sh -c "cd backend && python -m pytest src/tests"
+  #       language: system
+  #       pass_filenames: false
+  #       always_run: true
