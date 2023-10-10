@@ -6,11 +6,11 @@
   "[python]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "ms-python.black-formatter",
-    "black-formatter.args": [
-      "--config",
-      "backend/pyproject.toml"
-    ]
   },
+  "black-formatter.args": [
+    "--config",
+    "backend/pyproject.toml"
+  ],
   "typescript.validate.enable": true,
   "javascript.validate.enable": true,
   "python.linting.pylintPath": "${workspaceRoot}/backend",
