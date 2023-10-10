@@ -11,6 +11,11 @@
     "--config",
     "backend/pyproject.toml"
   ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "typescript.validate.enable": true,
   "javascript.validate.enable": true,
   "python.linting.pylintPath": "${workspaceRoot}/backend",
