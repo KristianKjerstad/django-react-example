@@ -2,8 +2,8 @@
 echo "installing python dependencies"
 pip install -r backend/requirements.txt
 
-# echo "install frontend dependencies"
-# cd frontend && npm install
-# cd ..
+echo "install frontend dependencies"
+cd frontend && npm install
+cd ..
 
 pre-commit install

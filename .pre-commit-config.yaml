@@ -10,7 +10,7 @@ repos:
       - id: check-merge-conflict
       - id: check-case-conflict
       - id: check-json
-        exclude: '(.devcontainer|.vscode)/.*'
+        exclude: '(.devcontainer|.vscode|frontend/tsconfig.json)'
       - id: check-toml
       - id: check-yaml
       - id: trailing-whitespace
@@ -73,16 +73,16 @@ repos:
       - id: prettier
         files: ^frontend/src/.*\.(vue|js|js|css|html|json)$
         args:
-          ["--config=frontend/.prettierrc.js", "--ignore-path=web/.prettierignore"]
+          ["--config=frontend/.prettierrc.cjs", "--ignore-path=frontend/.prettierignore"]
 
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v8.49.0
     hooks:
       - id: eslint
         name: run eslint
-        files: ^frontend/src/.*\.(vue|js|js|css|html|json)$
+        files: ^frontend/src/.*\.(ts|js|tsx|css|html|json)$
         types: [file]
-        args: ["--config=frontend/.eslintrc.js", "--ignore-path=frontend/.eslintignore"]
+        args: ["--config=frontend/.eslintrc.cjs", "--ignore-path=frontend/.eslintignore"]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.5.1
