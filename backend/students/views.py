@@ -32,6 +32,7 @@ class StudentsView(TemplateView):
         return HttpResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@method_decorator(csrf_exempt, name="dispatch")
 class StudentView(TemplateView):
     template_name = "student"
 
@@ -40,3 +41,15 @@ class StudentView(TemplateView):
         data = get_object_or_404(Student, pk=student_id)
         serializer = StudentSerializer(data, context={"request": request}, many=False)
         return HttpResponse(json.dumps(serializer.data), status=status.HTTP_200_OK, content_type="application/json")
+
+    def put(self, request, student_id):
+        """Edit a single student"""
+        try:
+            student = Student.objects.get(pk=student_id)
+        except Student.DoesNotExist:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+        serializer = StudentSerializer(student, data=json.loads(request.body), context={"request": request})
+        if serializer.is_valid():
+            serializer.save()
+            return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+        return HttpResponse("error occurred")
