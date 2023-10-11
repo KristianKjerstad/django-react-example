@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Student } from './NewStudentForm'
 import { API_URL } from '../constants'
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 const Header = () => {
   const [students, setStudents] = useState<Student[]>()
@@ -9,10 +9,12 @@ const Header = () => {
   useEffect(() => {
     axios
       .get(`${API_URL}/students`)
-      .then((response: AxiosResponse<Student>) => {
-        setStudents(response.data)
+      .then((response: AxiosResponse<Student[]>) => {
+        if (response.data) {
+          setStudents(response.data)
+        }
       })
-      .catch((error: AxiosError) => {
+      .catch((error) => {
         console.error(error)
       })
   }, [])

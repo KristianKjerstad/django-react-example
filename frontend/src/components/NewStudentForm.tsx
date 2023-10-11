@@ -1,6 +1,6 @@
 import { useState } from 'react'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { API_URL } from '../constants'
 
 export type Student = {
@@ -33,8 +33,12 @@ const NewStudentForm = () => {
       )
 
       console.log(response.data)
-    } catch (error: AxiosError) {
-      setError(error.message)
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setError(error.message)
+      } else {
+        console.error(error)
+      }
     }
   }
 
