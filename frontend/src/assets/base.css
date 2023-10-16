@@ -18,7 +18,7 @@
   --vt-c-text-light-1: var(--vt-c-indigo);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  --vt-c-text-dark-2: rgb(225, 225, 225);
 }
 
 /* semantic color variables for this project */
@@ -38,7 +38,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: var(--vt-c-black);
+    --color-background: #000102;
     --color-background-soft: var(--vt-c-black-soft);
     --color-background-mute: var(--vt-c-black-mute);
 
@@ -62,6 +62,11 @@ body {
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
+  background-size: 100%;
+  background-image: url('background.jpg');
+
+  background-repeat: no-repeat;
+  background-position: bottom;
   transition:
     color 0.5s,
     background-color 0.5s;
