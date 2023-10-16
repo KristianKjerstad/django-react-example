@@ -73,14 +73,14 @@ repos:
       - id: prettier
         files: ^frontend/src/.*\.(vue|js|js|css|html|json)$
         args:
-          ["--config=frontend/.prettierrc.cjs", "--ignore-path=frontend/.prettierignore"]
+          ["--config=frontend/.prettierrc.json", "--ignore-path=frontend/.prettierignore"]
 
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v8.49.0
     hooks:
       - id: eslint
         name: run eslint
-        files: ^frontend/src/.*\.(ts|js|tsx|css|html|json)$
+        files: ^frontend/src/.*\.(vue|ts|js|tsx|css|html|json)$
         types: [file]
         args: ["--config=frontend/.eslintrc.cjs", "--ignore-path=frontend/.eslintignore"]
 
