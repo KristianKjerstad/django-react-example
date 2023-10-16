@@ -19,6 +19,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/students/", include("students.urls"))
+    path("api/students/", include("students.urls")),
+    path("api/recipes/", include("recipes.urls"))
     # re_path(r"^api/students/([0-9])$", views.students_detail),
 ]
