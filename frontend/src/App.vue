@@ -3,17 +3,41 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <div>
-    <RouterView />
+  <div class="app">
+    <div class="appContent">
+      <RouterView />
+    </div>
   </div>
 </template>
 
 <style scoped>
-bg-image {
-  background-image: url('../assets/background.jpg');
-  background-color: white;
+/* import base.css */
+@import './assets/base.css';
+
+.app {
+  min-height: 100vh;
+  color: rgb(216, 216, 216);
+  text-align: center;
+  display: flex;
+  flex-direction: rows;
+  justify-content: center;
+  background: #000102;
+  padding-top: 48px;
+  padding-bottom: 24px;
+  padding-left: 18px;
+  padding-right: 18px;
+  max-width: 100%;
+  height: auto;
+  background-image: url('assets/background.jpg');
+  background-repeat: no-repeat;
+  background-position: bottom center;
 }
-/* header {
+
+.appContent {
+  max-width: 1200px;
+}
+
+header {
   line-height: 1.5;
   max-height: 100vh;
 }
@@ -58,5 +82,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-} */
+}
 </style>
