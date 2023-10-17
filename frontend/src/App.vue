@@ -17,16 +17,12 @@ import { RouterView } from 'vue-router'
 .app {
   min-height: 100vh;
   color: rgb(216, 216, 216);
-  text-align: center;
-  display: flex;
-  flex-direction: rows;
-  justify-content: center;
   background: #000102;
-  padding-top: 48px;
+  padding-top: 12px;
   padding-bottom: 24px;
   padding-left: 18px;
   padding-right: 18px;
-  max-width: 100%;
+  /* max-width: 100%; */
   height: auto;
   background-image: url('assets/background.jpg');
   background-repeat: no-repeat;
@@ -34,7 +30,7 @@ import { RouterView } from 'vue-router'
 }
 
 .appContent {
-  max-width: 1200px;
+  /* max-width: 1200px; */
 }
 
 header {
