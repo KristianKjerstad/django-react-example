@@ -1,5 +1,4 @@
 <template>
-  <NavigationBar />
   <h1>Recipe finder</h1>
 
   <v-text-field
