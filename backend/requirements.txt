@@ -1,6 +1,9 @@
 django
 djangorestframework
 django-cors-headers
+djangorestframework
+djangorestframework-jsonapi
+django-filter
 pytest
 pre-commit
 black
