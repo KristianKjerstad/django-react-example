@@ -16,7 +16,11 @@ class CocktailRecipeView(views.APIView):
     def get(self, request):
         queryset = CocktailRecipe.objects.all()
         serializer = CocktailRecipeSerializer(queryset, many=True)
-        return JsonResponse(serializer.data, status=status.HTTP_200_OK, safe=False)
+        return JsonResponse(
+            serializer.data,
+            status=status.HTTP_200_OK,
+            safe=False,
+        )
 
     def post(self, request):
         """Create a new CocktailRecipe object."""
