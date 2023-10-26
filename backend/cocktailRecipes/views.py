@@ -22,6 +22,8 @@ class CocktailRecipeView(views.APIView):
         """Create a new CocktailRecipe object."""
         serializer = CocktailRecipeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        # serializer.validate()
+
         if CocktailRecipe.objects.filter(name=request.data["name"]).exists():
             raise Exception(f"CocktailRecipe with name {request.data['name']} already exists")
         if serializer.is_valid():

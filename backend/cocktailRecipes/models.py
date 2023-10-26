@@ -8,8 +8,8 @@ class CocktailRecipe(models.Model):
 
     id = models.AutoField(primary_key=True)
     name = models.CharField("Name", max_length=200)
-    ingredients = models.JSONField("Ingredients")
-    steps = models.JSONField("Steps")
+    ingredients = models.JSONField("Ingredients", default=list, blank=False)
+    steps = models.JSONField("Steps", default=list, blank=False)
 
     def __str__(self):
         """Unicode representation of CocktailRecipe."""
