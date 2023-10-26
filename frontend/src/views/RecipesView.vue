@@ -1,15 +1,20 @@
 <template>
   <h1>Recipes</h1>
-
-  <div v-for="recipe in recipes" :key="recipe.id">{{ recipe.name }}</div>
+  <div class="recipeCardContainer">
+    <div v-for="recipe in recipes" :key="recipe.id">
+      <RecipeCard :recipe="recipe" />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { getAllRecipes } from '../api'
 import type { Recipe } from '../types'
+import RecipeCard from '../components/RecipeCard.vue'
 
 export default defineComponent({
+  components: { RecipeCard },
   name: 'RecipesView',
   data() {
     return {
@@ -29,5 +34,13 @@ export default defineComponent({
 <style scoped>
 h1 {
   text-align: center;
+}
+
+.recipeCardContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 </style>
