@@ -1,12 +1,16 @@
 from django.http import JsonResponse
 from rest_framework import status, views
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 
-from cocktailRecipes.models import CocktailRecipe
+from cocktailRecipes.models import CocktailRecipe, Ingredient
 
-from .serializers import CocktailRecipeSerializer
+from .serializers import (
+    CocktailRecipeIngredientSerializer,
+    CocktailRecipeSerializer,
+    ListParameterSerializer,
+)
 
 
 class CocktailRecipeView(views.APIView):
@@ -38,6 +42,20 @@ class CocktailRecipeView(views.APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class CocktailRecipeIngredientsView(views.APIView):
+    serializer_class = CocktailRecipeIngredientSerializer
+    parser_classes = [JSONParser]
+
+    def get(self, request):
+        queryset = Ingredient.objects.all()
+        serializer = CocktailRecipeIngredientSerializer(queryset, many=True)
+        return JsonResponse(
+            serializer.data,
+            status=status.HTTP_200_OK,
+            safe=False,
+        )
+
+
 @api_view(http_method_names=["GET"])
 def get_one(request, id):
     try:
@@ -47,3 +65,26 @@ def get_one(request, id):
 
     serializer = CocktailRecipeSerializer(queryset, many=False)
     return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(http_method_names=["POST"])
+@parser_classes([JSONParser])
+def get_filtered(request):
+    """Get all recipes that contains all ingredients in the list of ingredients sent in as query parameter,
+    as a list of ingredient ids.
+    """
+    serializer = ListParameterSerializer(data=request.query_params)
+    serializer.is_valid(raise_exception=True)
+    ingredient_ids_as_strings: list[str] = serializer.data["values"][0].split(",")
+    ingredient_ids: list[int] = [int(ingredient_id) for ingredient_id in ingredient_ids_as_strings]
+    all_recipes = CocktailRecipe.objects.all()
+    filtered_recipes = []
+    for recipe in all_recipes:
+        recipe_ingredient_ids: list[int] = [
+            ingredient["id"]
+            for ingredient in CocktailRecipeIngredientSerializer(recipe.ingredients.all(), many=True).data
+        ]
+        if all(ingredient_id in recipe_ingredient_ids for ingredient_id in ingredient_ids):
+            filtered_recipes.append(CocktailRecipeSerializer(recipe).data)
+
+    return JsonResponse(filtered_recipes, status=status.HTTP_200_OK, safe=False)
