@@ -1,5 +1,6 @@
 <template>
   <h1>Recipes</h1>
+  <FilterRecipes @getSelectedIngredients="getSelectedIngredients" />
   <div class="recipeCardContainer">
     <div v-for="recipe in recipes" :key="recipe.id">
       <RecipeCard :recipe="recipe" />
@@ -10,14 +11,16 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { getAllRecipes } from '../api'
-import type { Recipe } from '../types'
+import type { Ingredient, Recipe } from '../types'
 import RecipeCard from '../components/RecipeCard.vue'
+import FilterRecipes from '../components/FilterRecipes.vue'
 
 export default defineComponent({
-  components: { RecipeCard },
+  components: { RecipeCard, FilterRecipes },
   name: 'RecipesView',
   data() {
     return {
+      newInput: '',
       recipes: [] as Recipe[]
     }
   },
@@ -27,7 +30,11 @@ export default defineComponent({
       this.recipes = recipes
     })
   },
-  methods: {}
+  methods: {
+    getSelectedIngredients(ingredients: Ingredient[]) {
+      console.log('getSelectedIngredients', ingredients)
+    }
+  }
 })
 </script>
 
