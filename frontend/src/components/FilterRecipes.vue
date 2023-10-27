@@ -9,7 +9,11 @@
     v-model="selectedIngredients"
     return-object
   ></v-select>
-  <v-btn color="#4d4d4d" outlined @click="$emit('getSelectedIngredients', selectedIngredients)"
+  <v-btn
+    :disabled="selectedIngredients && selectedIngredients.length === 0"
+    color="#4d4d4d"
+    outlined
+    @click="$emit('getSelectedIngredients', selectedIngredients)"
     >Search</v-btn
   >
 </template>
@@ -38,7 +42,8 @@ export default defineComponent({
   methods: {
     itemProps(ingredient: Ingredient) {
       return {
-        title: ingredient.name
+        title: ingredient.name,
+        subtitle: ingredient.id
       }
     }
   }

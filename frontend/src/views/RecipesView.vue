@@ -2,15 +2,22 @@
   <h1>Recipes</h1>
   <FilterRecipes @getSelectedIngredients="getSelectedIngredients" />
   <div class="recipeCardContainer">
-    <div v-for="recipe in recipes" :key="recipe.id">
-      <RecipeCard :recipe="recipe" />
+    <div v-if="filteredRecipes.length === 0">
+      <div v-for="recipe in recipes" :key="recipe.id">
+        <RecipeCard :recipe="recipe" />
+      </div>
+    </div>
+    <div v-if="filteredRecipes.length > 0">
+      <div v-for="recipe in filteredRecipes" :key="recipe.id">
+        <RecipeCard :recipe="recipe" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { getAllRecipes } from '../api'
+import { getAllRecipes, getFilteredRecipes } from '../api'
 import type { Ingredient, Recipe } from '../types'
 import RecipeCard from '../components/RecipeCard.vue'
 import FilterRecipes from '../components/FilterRecipes.vue'
@@ -21,7 +28,8 @@ export default defineComponent({
   data() {
     return {
       newInput: '',
-      recipes: [] as Recipe[]
+      recipes: [] as Recipe[],
+      filteredRecipes: [] as Recipe[]
     }
   },
   created() {
@@ -31,8 +39,10 @@ export default defineComponent({
     })
   },
   methods: {
-    getSelectedIngredients(ingredients: Ingredient[]) {
-      console.log('getSelectedIngredients', ingredients)
+    async getSelectedIngredients(ingredients: Ingredient[]) {
+      const filteredRecipesBasedOnIngredients = await getFilteredRecipes(ingredients)
+      this.filteredRecipes = filteredRecipesBasedOnIngredients
+      console.log('new recipes', filteredRecipesBasedOnIngredients)
     }
   }
 })

@@ -67,7 +67,7 @@ def get_one(request, id):
     return JsonResponse(serializer.data, status=status.HTTP_200_OK)
 
 
-@api_view(http_method_names=["POST"])
+@api_view(http_method_names=["GET"])
 @parser_classes([JSONParser])
 def get_filtered(request):
     """Get all recipes that contains all ingredients in the list of ingredients sent in as query parameter,
