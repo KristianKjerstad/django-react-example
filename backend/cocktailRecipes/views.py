@@ -13,11 +13,26 @@ from .serializers import (
 )
 
 
-class CocktailRecipeView(views.APIView):
+class CocktailRecipeDetail(views.APIView):
+    serializer_class = CocktailRecipeSerializer
+    parser_classes = [JSONParser]
+
+    def get(self, request, id):
+        try:
+            queryset = CocktailRecipe.objects.get(pk=id)
+        except CocktailRecipe.DoesNotExist:
+            return Response({"error": "CocktailRecipe does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = CocktailRecipeSerializer(queryset, many=False)
+        return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+
+
+class CocktailRecipeList(views.APIView):
     serializer_class = CocktailRecipeSerializer
     parser_classes = [JSONParser]
 
     def get(self, request):
+        """Get all recipes from the database."""
         queryset = CocktailRecipe.objects.all()
         serializer = CocktailRecipeSerializer(queryset, many=True)
         return JsonResponse(
@@ -47,6 +62,7 @@ class CocktailRecipeIngredientsView(views.APIView):
     parser_classes = [JSONParser]
 
     def get(self, request):
+        """Get all ingredients from the database."""
         queryset = Ingredient.objects.all()
         serializer = CocktailRecipeIngredientSerializer(queryset, many=True)
         return JsonResponse(
@@ -54,17 +70,6 @@ class CocktailRecipeIngredientsView(views.APIView):
             status=status.HTTP_200_OK,
             safe=False,
         )
-
-
-@api_view(http_method_names=["GET"])
-def get_one(request, id):
-    try:
-        queryset = CocktailRecipe.objects.get(pk=id)
-    except CocktailRecipe.DoesNotExist:
-        return Response({"error": "CocktailRecipe does not exist"}, status=status.HTTP_404_NOT_FOUND)
-
-    serializer = CocktailRecipeSerializer(queryset, many=False)
-    return JsonResponse(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(http_method_names=["GET"])

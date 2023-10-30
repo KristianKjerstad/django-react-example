@@ -111,11 +111,11 @@ repos:
         additional_dependencies:
           - tomli
 
-  # - repo: local
-  #   hooks:
-  #     - id: pytest
-  #       name: Run pytest
-  #       entry: sh -c "cd backend && python -m pytest src/tests"
-  #       language: system
-  #       pass_filenames: false
-  #       always_run: true
+  - repo: local
+    hooks:
+      - id: pytest
+        name: Run pytest
+        entry: sh -c "cd backend && python manage.py test"
+        language: system
+        pass_filenames: false
+        always_run: true
