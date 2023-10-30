@@ -42,3 +42,18 @@ class CocktailRecipeTestCase(TestCase):
         response = self.client.get(f"/cocktailRecipes/filtered/?values={ID}")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), [CocktailRecipeSerializer(self.example_recipe).data])
+
+    def test_create_recipe(self):
+        new_recipe = {
+            "name": "x",
+            "ingredients": ["1", "2"],
+            "steps": [
+                "Blend rum, coconut cream, and pineapple juice with ice",
+                "Pour into a chilled glass",
+                "Garnish with a slice of pineapple and a cherry",
+            ],
+        }
+        request = self.client.post("/cocktailRecipes/", data=new_recipe, content_type="application/json")
+        self.assertEqual(request.status_code, 201)
+        resulting_id = request.data["id"]
+        self.assertEqual(CocktailRecipe.objects.filter(id=resulting_id).exists(), True)
