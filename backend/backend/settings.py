@@ -30,20 +30,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
 ]
-# CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://localhost:5173"]
-# CORS_ALLOW_ALL_ORIGINS = True
-# # CORS_ALLOW_CREDENTIALS = False
-# CORS_ALLOW_HEADERS = [
-#     "accept",
-#     "accept-encoding",
-#     "authorization",
-#     "content-type",
-#     "dnt",
-#     "origin",
-#     "user-agent",
-#     "x-csrftoken",
-#     "x-requested-with",
-# ]
+
 
 # Application definition
 
@@ -58,6 +45,7 @@ INSTALLED_APPS = [
     "django_filters",  # Used with DRF
     "rest_framework",  # DRF package
     "cocktailRecipes",  # New app,
+    "drf_spectacular",  # OpenAPI/Swagger
 ]
 
 MIDDLEWARE = [
@@ -144,6 +132,12 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Cocktail recipes API",
+    "DESCRIPTION": "An API for handling cocktail recipes",
+    # OTHER SETTINGS
+}
+
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
     "DEFAULT_PARSER_CLASSES": ("rest_framework_json_api.parsers.JSONParser",),
@@ -161,4 +155,5 @@ REST_FRAMEWORK = {
     "SEARCH_PARAM": "filter[search]",
     "TEST_REQUEST_RENDERER_CLASSES": ("rest_framework_json_api.renderers.JSONRenderer",),
     "TEST_REQUEST_DEFAULT_FORMAT": "vnd.api+json",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }

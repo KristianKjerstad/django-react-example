@@ -7,3 +7,5 @@ django-filter
 pytest
 pre-commit
 black
+uritemplate
+drf-spectacular
